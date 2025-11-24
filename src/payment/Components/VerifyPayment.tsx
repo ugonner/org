@@ -7,7 +7,6 @@ import { APIBaseURL, getData } from "../../shared/api/base";
 import { formatCurrency } from "../../utils";
 import { PaymentPurpose } from "../enums/payment.enum";
 import { UserRoutes } from "../../user/enums/routes.enum";
-import { BookingRoutes } from "../../Booking/enums/routes";
 
 export const VerifyPayment = () => {
   const router = useIonRouter();
@@ -30,10 +29,7 @@ export const VerifyPayment = () => {
       setLoading({ isLoading: false, loadingMessage: "" });
       if (res.paymentPurpose === PaymentPurpose.FUND_DEPOSIT)
         router.push(`${UserRoutes.PROFILE}?ui=${res.profile?.userId}`);
-      if (res.paymentPurpose === PaymentPurpose.SERVICE_PAYMENT)
-        router.push(
-          `${BookingRoutes.INVOICE}?bi=${res?.booking?.id}`
-        );
+      
     } catch (error) {
       handleAsyncError(error, "Error verifying transaction");
     }
@@ -63,13 +59,7 @@ export const VerifyPayment = () => {
                     router.push(
                       `${UserRoutes.PROFILE}?ui=${paymentTransaction.profile?.userId}`
                     );
-                  if (
-                    paymentTransaction?.paymentPurpose ===
-                    PaymentPurpose.SERVICE_PAYMENT
-                  )
-                    router.push(
-                      `${BookingRoutes.INVOICE}?bi=${paymentTransaction?.booking?.id}`
-                    );
+                  
                 }}
               >
                 View Detail
